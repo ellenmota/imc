@@ -4,6 +4,7 @@ var runsequence = require('run-sequence');
 var del = require('rimraf');
 var cssmin = require('gulp-mini-css');
 var imgmin = require('gulp-imagemin');
+var browser = require('browser-sync');
 
 //Teste Gulp
 gulp.task('teste',function(){
@@ -37,7 +38,18 @@ gulp.task('img',function(){
 //Sequencia de tasks a ser rodadas
 gulp.task('run', function(){
   console.log('Rodando as Tasks..');
-  runsequence('deletar','teste','html','css','img');
+  runsequence('deletar','teste','html','css','img','browser');
+});
+
+//Broser Sync
+gulp.task('browser',function(){
+  browser({
+    files:['./dist/**/*'],
+    server:{
+      baseDir: './dist/'
+    }
+  });
+  console.log('Browser Sync start....');
 });
 
 //Deletar a dist
