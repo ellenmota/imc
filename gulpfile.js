@@ -6,6 +6,7 @@ var cssmin = require('gulp-mini-css');
 var imgmin = require('gulp-imagemin');
 var browser = require('browser-sync');
 var watch = require('gulp-watch');
+var sass = require('gulp-sass');
 
 //Teste Gulp
 gulp.task('teste',function(){
@@ -20,13 +21,13 @@ gulp.task('html',function(){
         .pipe(gulp.dest('./dist'))
 });
 
-//Minificar Css
-gulp.task('css', function(){
-  gulp.src('./src/styles/*.css')
-        .pipe(cssmin({ext:'-min.css'}))
-        .pipe(gulp.dest('./dist'));
-  console.log('Css minificado..');
-})
+//Sass p/ Css
+gulp.task('sass',function(){
+  return gulp.src('./src/styles/*.scss')
+  .pipe(sass().on('error', sass.logError))
+  .pipe(gulp.dest('./dist'));
+  console.log('Sass para Css...');
+});
 
 //Minificar Imagens
 gulp.task('img',function(){
@@ -39,7 +40,7 @@ gulp.task('img',function(){
 //Sequencia de tasks a ser rodadas
 gulp.task('run', function(callback){
   console.log('Rodando as Tasks..');
-  runsequence('deletar','teste','html','css','img','browser','monitor',callback);
+  runsequence('deletar','teste','html','sass','img','browser','monitor',callback);
 });
 
 //Broser Sync
@@ -58,8 +59,8 @@ gulp.task('monitor', function(){
   watch('./src/*.html',function() {
       runsequence('html');
     });
-  watch('./src/styles/*.css',function(){
-    runsequence('css');
+  watch('./src/styles/*.scss',function(){
+    runsequence('sass');
   });
   watch('./src/img/*',function(){
     runsequence('img');

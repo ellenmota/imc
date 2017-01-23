@@ -1,0 +1,53 @@
+$font-stack: Arial;
+$font-color: #000;
+$back: #46265C;
+$font-tam:13px;
+
+*{margin:0 auto; padding: 0;}
+body{
+  background: $back;
+  font-family: $font-stack;
+  h1{
+    color:#fff;
+  }
+  label{
+    color:$font-color;
+  }
+}
+
+#content{
+  width: 500px;
+  height: auto;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 5px 5px 5px #000;
+}
+
+form{
+  padding: 30px;
+  label,input{
+    margin-left:125px;
+  }
+  input[type="submit"]{
+    padding: 15px;
+    border: none;
+    color:#fff;
+    background: #63B75D;
+    font-weight: bold;
+    border-radius: 3px;
+  }
+  input[type="submit"]:hover{
+    background: #217756;
+    cursor: pointer;
+  }
+  input[type="text"]{
+    padding: 10px;
+  }
+  input[type="number"]{
+    padding: 10px;
+  }
+  input{
+    margin-bottom: 15px;
+    font-size: $font-tam;
+  }
+}
