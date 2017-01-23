@@ -5,6 +5,7 @@ var del = require('rimraf');
 var cssmin = require('gulp-mini-css');
 var imgmin = require('gulp-imagemin');
 var browser = require('browser-sync');
+var watch = require('gulp-watch');
 
 //Teste Gulp
 gulp.task('teste',function(){
@@ -36,9 +37,9 @@ gulp.task('img',function(){
 });
 
 //Sequencia de tasks a ser rodadas
-gulp.task('run', function(){
+gulp.task('run', function(callback){
   console.log('Rodando as Tasks..');
-  runsequence('deletar','teste','html','css','img','browser');
+  runsequence('deletar','teste','html','css','img','browser','monitor',callback);
 });
 
 //Broser Sync
@@ -50,6 +51,20 @@ gulp.task('browser',function(){
     }
   });
   console.log('Browser Sync start....');
+});
+
+//Monitorar mudanças
+gulp.task('monitor', function(){
+  watch('./src/*.html',function() {
+      runsequence('html');
+    });
+  watch('./src/styles/*.css',function(){
+    runsequence('css');
+  });
+  watch('./src/img/*',function(){
+    runsequence('img');
+  });
+  console.log('Monitorando...');
 });
 
 //Deletar a dist
