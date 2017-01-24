@@ -6,7 +6,7 @@
 //   console.log(teste);
 //   alert(teste);
 // }
-// const algo = require('./modulo1.js');
-//
-// algo('TESTE', document.jquerySelector('h2'));
+const algo = require('./modulo1.js');
+
+algo('TESTE', document.jquerySelector('h2'));
 console.log('testeeee');
