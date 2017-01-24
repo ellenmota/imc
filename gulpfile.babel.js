@@ -7,6 +7,9 @@ var imgmin = require('gulp-imagemin');
 var browser = require('browser-sync');
 var watch = require('gulp-watch');
 var sass = require('gulp-sass');
+var babel = require('gulp-babel');
+
+import webpack from 'webpack';
 
 //Teste Gulp
 gulp.task('teste',function(){
@@ -29,6 +32,20 @@ gulp.task('sass',function(){
   console.log('Sass para Css...');
 });
 
+//Js
+gulp.task('js', function(done){
+  var config = require('./webpack.config');
+  var doneCalled = false;
+
+  webpack(config, function(err, stats) {
+    console.log(stats.compilation.errors.toString());
+    if(!doneCalled) {
+      doneCalled = true;
+      done();
+    }
+  });
+});
+
 //Minificar Imagens
 gulp.task('img',function(){
   gulp.src('./src/img/*')
@@ -40,7 +57,7 @@ gulp.task('img',function(){
 //Sequencia de tasks a ser rodadas
 gulp.task('run', function(callback){
   console.log('Rodando as Tasks..');
-  runsequence('deletar','teste','html','sass','img','browser','monitor',callback);
+  runsequence('deletar','teste','html','sass','img','js','browser','monitor',callback);
 });
 
 //Broser Sync
@@ -61,6 +78,9 @@ gulp.task('monitor', function(){
     });
   watch('./src/styles/*.scss',function(){
     runsequence('sass');
+  });
+  watch('./src/scripts/*.js',function(){
+    runsequence('js');
   });
   watch('./src/img/*',function(){
     runsequence('img');
