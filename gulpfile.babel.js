@@ -1,4 +1,5 @@
-var gulp = require('gulp');
+import gulp from 'gulp';
+// var gulp = require('gulp');
 var htmlmin = require('gulp-htmlmin');
 var runsequence = require('run-sequence');
 var del = require('rimraf');
@@ -8,8 +9,8 @@ var browser = require('browser-sync');
 var watch = require('gulp-watch');
 var sass = require('gulp-sass');
 var babel = require('gulp-babel');
-
 import webpack from 'webpack';
+import react from 'react';
 
 //Teste Gulp
 gulp.task('teste',function(){

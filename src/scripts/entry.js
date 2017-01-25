@@ -1,12 +1,5 @@
-// console.log('funfou..');
-// alert('MAOIIII');
+import React from 'react';
+import {render} from 'react-dom';
+import Formulario from './Formulario';
 
-// let teste = "Helooo";
-// let lol = () => {
-//   console.log(teste);
-//   alert(teste);
-// }
-const algo = require('./modulo1.js');
-
-algo('TESTE', document.jquerySelector('h2'));
-console.log('testeeee');
+render((<Formulario />), document.getElementById('app'));
