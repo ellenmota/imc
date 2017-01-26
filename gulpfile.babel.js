@@ -1,24 +1,24 @@
 import gulp from 'gulp';
 // var gulp = require('gulp');
-var htmlmin = require('gulp-htmlmin');
-var runsequence = require('run-sequence');
-var del = require('rimraf');
-var cssmin = require('gulp-mini-css');
-var imgmin = require('gulp-imagemin');
-var browser = require('browser-sync');
-var watch = require('gulp-watch');
-var sass = require('gulp-sass');
-var babel = require('gulp-babel');
+import htmlmin from 'gulp-htmlmin';
+import runsequence from 'run-sequence';
+import del from 'rimraf';
+import cssmin from 'gulp-mini-css';
+import imgmin from 'gulp-imagemin';
+import browser from 'browser-sync';
+import watch from 'gulp-watch';
+import sass from 'gulp-sass';
+import babel from 'gulp-babel';
 import webpack from 'webpack';
 import react from 'react';
 
 //Teste Gulp
-gulp.task('teste',function(){
+gulp.task('teste',() => {
   console.log('Teste Gulp...');
 });
 
 //Minificar Html
-gulp.task('html',function(){
+gulp.task('html',() => {
   console.log('html..');
   return gulp.src('./src/*.html')
         .pipe(htmlmin({collapseWhitespace: true}))
@@ -26,7 +26,7 @@ gulp.task('html',function(){
 });
 
 //Sass p/ Css
-gulp.task('sass',function(){
+gulp.task('sass',() => {
   return gulp.src('./src/styles/*.scss')
   .pipe(sass().on('error', sass.logError))
   .pipe(gulp.dest('./dist'));
@@ -34,11 +34,11 @@ gulp.task('sass',function(){
 });
 
 //Js
-gulp.task('js', function(done){
-  var config = require('./webpack.config');
-  var doneCalled = false;
+gulp.task('js',(done) => {
+  let config = require('./webpack.config');
+  let doneCalled = false;
 
-  webpack(config, function(err, stats) {
+  webpack(config, (err, stats) => {
     console.log(stats.compilation.errors.toString());
     if(!doneCalled) {
       doneCalled = true;
@@ -48,7 +48,7 @@ gulp.task('js', function(done){
 });
 
 //Minificar Imagens
-gulp.task('img',function(){
+gulp.task('img',() => {
   gulp.src('./src/img/*')
   .pipe(imgmin())
   .pipe(gulp.dest('./dist/img'))
@@ -56,13 +56,13 @@ gulp.task('img',function(){
 });
 
 //Sequencia de tasks a ser rodadas
-gulp.task('run', function(callback){
+gulp.task('run',(callback) => {
   console.log('Rodando as Tasks..');
   runsequence('deletar','teste','html','sass','img','js','browser','monitor',callback);
 });
 
 //Browser Sync
-gulp.task('browser',function(){
+gulp.task('browser',() => {
   browser({
     files:['./dist/**/*'],
     server:{
@@ -73,24 +73,24 @@ gulp.task('browser',function(){
 });
 
 //Monitorar mudanças
-gulp.task('monitor', function(){
-  watch('./src/*.html',function() {
+gulp.task('monitor',() =>{
+  watch('./src/*.html',() =>{
       runsequence('html');
     });
-  watch('./src/styles/*.scss',function(){
+  watch('./src/styles/*.scss',() =>{
     runsequence('sass');
   });
-  watch('./src/scripts/*.js',function(){
+  watch('./src/scripts/*.js',() =>{
     runsequence('js');
   });
-  watch('./src/img/*',function(){
+  watch('./src/img/*',() =>{
     runsequence('img');
   });
   console.log('Monitorando...');
 });
 
 //Deletar a dist
-gulp.task('deletar', function(callback){
+gulp.task('deletar',(callback) => {
   del('./dist',callback);
   console.log('Dist Deletada...');
 });
