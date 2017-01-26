@@ -61,7 +61,7 @@ gulp.task('run', function(callback){
   runsequence('deletar','teste','html','sass','img','js','browser','monitor',callback);
 });
 
-//Broser Sync
+//Browser Sync
 gulp.task('browser',function(){
   browser({
     files:['./dist/**/*'],
@@ -90,7 +90,7 @@ gulp.task('monitor', function(){
 });
 
 //Deletar a dist
-gulp.task('deletar', function(callback ){
+gulp.task('deletar', function(callback){
   del('./dist',callback);
   console.log('Dist Deletada...');
 });
