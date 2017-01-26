@@ -1,32 +1,79 @@
 import React from 'react';
 
-export default class Formulario extends React.Component{
+import {calcular} from './Calculo';
 
+export default class Formulario extends React.Component{
   constructor(props){
     super(props);
+
+    this.state = {
+      peso: '',
+      altura: ''
+    };
   }
+
+  handleSubmit(e) {
+    e.preventDefault();
+
+    let imc = calcular(this.state.peso, this.state.altura);
+
+    this.refs.nome.value = '';
+    this.refs.idade.value = '';
+    this.refs.peso.value = '';
+    this.refs.altura.value = '';
+
+    setTimeout(() => {
+      alert(imc);
+    }, 200);
+  }
+
+  handlePesoChange() {
+    let peso = this.refs.peso.value.replace(',', '.').replace(/[a-zA-Z]/g, '');
+    console.log(peso);
+
+    this.setState({peso});
+  }
+
+  handleAlturaChange() {
+    let altura = this.refs.altura.value.replace(',', '.').replace(/[a-zA-Z]/g, '');
+
+    this.setState({altura});
+  }
+
   render(){
     return(
       <div>
-        <form action="" method="post">
-          <label>Nome</label>
+        <form onSubmit={::this.handleSubmit}>
+          <label htmlFor="nome">Nome</label>
           <br />
-          <input type="text" name="nome" value="" placeholder="Digite seu nome"/>
+          <input type="text" id="nome" defaultValue="" placeholder="Digite seu nome" ref="nome" required/>
           <br />
-          <label>Idade</label>
+          <label htmlFor="idade">Idade</label>
           <br />
-          <input type="number" name="idade" value="" placeholder="Digite sua idade"/>
+          <input type="number" id="idade" defaultValue="" placeholder="Digite sua idade" ref="idade" required/>
           <br />
-          <label>Peso</label>
+          <label htmlFor="peso">Peso</label>
           <br />
-          <input type="number" name="peso" value="" placeholder="Digite seu peso"/>
+          <input type="text"
+                 id="peso"
+                 value={this.state.peso}
+                 onChange={::this.handlePesoChange}
+                 placeholder="Digite seu peso"
+                 ref="peso"
+                 required/>
           <br />
-          <label>Altura</label>
+          <label htmlFor="altura">Altura</label>
           <br />
-          <input type="number" name="altura" value="" placeholder="Digite sua Altura" />
+          <input type="text"
+                 id="altura"
+                 value={this.state.altura}
+                 onChange={::this.handleAlturaChange}
+                 placeholder="Digite sua Altura"
+                 ref="altura"
+                 required/>
           <br />
           <br />
-          <input type="submit" name="calcular" value="Descubrir!"/>
+          <input type="submit" id="calcular" value="Descubrir!"/>
         </form>
       </div>
     );
